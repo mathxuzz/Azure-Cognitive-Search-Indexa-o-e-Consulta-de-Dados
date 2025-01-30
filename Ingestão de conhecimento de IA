@@ -1,0 +1,11 @@
+from langchain.document_loaders import TextLoader
+
+# Carregar documentos de texto
+document_paths = ["documento1.txt", "documento2.txt", "documento3.txt"]
+documents = []
+
+for path in document_paths:
+    loader = TextLoader(path)
+    documents.extend(loader.load())
+
+print(f"Total de documentos carregados: {len(documents)}")
