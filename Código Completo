@@ -1,0 +1,25 @@
+from langchain.document_loaders import TextLoader
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.vectorstores import FAISS
+
+# Passo 1: Ingestão de Conhecimento de IA
+document_paths = ["documento1.txt", "documento2.txt", "documento3.txt"]
+documents = []
+
+for path in document_paths:
+    loader = TextLoader(path)
+    documents.extend(loader.load())
+
+print(f"Total de documentos carregados: {len(documents)}")
+
+# Passo 2: Criação do Índice Correspondente
+embeddings = OpenAIEmbeddings()
+vector_store = FAISS.from_documents(documents, embeddings)
+vector_store.save_local("faiss_index")
+
+# Passo 3: Exploração das Funcionalidades
+query = "Qual é o tema principal do documento?"
+results = vector_store.similarity_search(query, k=3)
+
+for i, result in enumerate(results):
+    print(f"Resultado {i+1}:\n{result.page_content}\n")
