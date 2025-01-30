@@ -1,0 +1,11 @@
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.vectorstores import FAISS
+
+# Configurar o modelo de embeddings
+embeddings = OpenAIEmbeddings()
+
+# Criar o índice FAISS
+vector_store = FAISS.from_documents(documents, embeddings)
+
+# Salvar o índice para uso futuro
+vector_store.save_local("faiss_index")
