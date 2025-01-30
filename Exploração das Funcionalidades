@@ -1,0 +1,14 @@
+from langchain.vectorstores import FAISS
+from langchain.embeddings import OpenAIEmbeddings
+
+# Carregar o índice FAISS
+embeddings = OpenAIEmbeddings()
+vector_store = FAISS.load_local("faiss_index", embeddings)
+
+# Realizar uma busca semântica
+query = "Qual é o tema principal do documento?"
+results = vector_store.similarity_search(query, k=3)
+
+# Exibir os resultados
+for i, result in enumerate(results):
+    print(f"Resultado {i+1}:\n{result.page_content}\n")
